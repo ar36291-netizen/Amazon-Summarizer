@@ -71,14 +71,6 @@ Deliver in this exact section order:
 ## BUYER PROFILE INSIGHTS
 ## COMPETITIVE SIGNALS
 ## OVERALL VERDICT (3-5 sentences, max 80 chars per line)
-## CONFIDENCE IN THIS ANALYSIS: [High / Medium / Low]
-
----
-## GUARDRAILS CHECKLIST
-(List all checked [x] or flagged [!] as defined in instructions)
-
-## OUTPUT LINE LENGTH RULE (MANDATORY)
-Every single line of output must be 80 characters or fewer.
 `;
 
 // ASIN Extraction helper
