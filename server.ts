@@ -130,13 +130,28 @@ app.post("/api/analyze", async (req, res) => {
         Ensure every line of your output is 80 characters or fewer.
       `;
 
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash", 
-      config: { systemInstruction: SYSTEM_PROMPT },
-      contents: prompt
-    });
+    let response;
+    let retries = 3;
+    while (retries > 0) {
+      try {
+        response = await ai.models.generateContent({
+          model: "gemini-2.5-flash", 
+          config: { systemInstruction: SYSTEM_PROMPT },
+          contents: prompt
+        });
+        break; // Success
+      } catch (err: any) {
+        if (err.status === 503 && retries > 1) {
+          console.log(`[API] Gemini 503 error, retrying... (${retries - 1} attempts left)`);
+          await new Promise(res => setTimeout(res, 2000)); // Wait 2 seconds
+          retries--;
+        } else {
+          throw err;
+        }
+      }
+    }
     
-    res.json({ report: response.text });
+    res.json({ report: response?.text });
   } catch (error: any) {
     console.error("[SERVER ERROR] Analysis failure:", error);
     res.status(500).json({ error: error.message || "Failed to analyze reviews" });
