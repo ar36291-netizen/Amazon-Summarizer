@@ -86,7 +86,9 @@ function extractAsin(input: string): { asin: string | null; marketplace: string 
   const patterns = [
     /\/dp\/([A-Z0-9]{10})/,
     /\/gp\/product\/([A-Z0-9]{10})/,
-    /\/product\/([A-Z0-9]{10})/
+    /\/product\/([A-Z0-9]{10})/,
+    /\/gp\/aw\/d\/([A-Z0-9]{10})/,
+    /\/d\/([A-Z0-9]{10})/
   ];
 
   for (const pattern of patterns) {
