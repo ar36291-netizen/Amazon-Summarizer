@@ -177,17 +177,12 @@ app.post("/api/scrape", async (req, res) => {
     const client = getApifyClient();
     
     const input = {
-      products: [`https://www.${marketplace}/dp/${asin}`],
-      region: marketplace,
-      limit: 10,
-      sort: "helpful",
-      rating: "all",
-      personal_data: false,
-      include_variants: true, // Enabled to ensure we don't miss reviews grouped under parent ASINs
+      productUrls: [{ url: `https://www.${marketplace}/dp/${asin}` }],
+      maxReviews: 10,
     };
 
     console.log(`[APIFY] Starting actor run...`);
-    const run = await client.actor("web_wanderer/amazon-reviews-extractor").call(input);
+    const run = await client.actor("junglee/amazon-reviews-scraper").call(input);
     console.log(`[APIFY] Run finished. Dataset: ${run.defaultDatasetId}`);
     
     const { items } = await client.dataset(run.defaultDatasetId).listItems();
