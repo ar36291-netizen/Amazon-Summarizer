@@ -166,7 +166,7 @@ app.post("/api/scrape", async (req, res) => {
       sort: "helpful",
       rating: "all",
       personal_data: false,
-      include_variants: false, // Disabling for speed
+      include_variants: true, // Enabled to ensure we don't miss reviews grouped under parent ASINs
     };
 
     console.log(`[APIFY] Starting actor run...`);
