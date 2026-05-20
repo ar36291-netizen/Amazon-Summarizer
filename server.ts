@@ -134,8 +134,10 @@ app.post("/api/analyze", async (req, res) => {
     let retries = 3;
     while (retries > 0) {
       try {
+        // Fallback to 1.5-flash on the last attempt if 2.5 is constantly overloaded
+        const modelToUse = retries === 1 ? "gemini-1.5-flash" : "gemini-2.5-flash";
         response = await ai.models.generateContent({
-          model: "gemini-2.5-flash", 
+          model: modelToUse, 
           config: { systemInstruction: SYSTEM_PROMPT },
           contents: prompt
         });
